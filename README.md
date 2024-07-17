@@ -62,7 +62,7 @@ StarZ Utilities is licensed under the MIT License. See the [LICENSE](#) file for
 ## Contact
 
 For support or inquiries, please contact us here:
-- Discord: [www.starzutilities.com](https://discord.gg/ScR9MGbRSY)
+- Discord: [StarZ Community](https://discord.gg/ScR9MGbRSY)
 
 ---
 
