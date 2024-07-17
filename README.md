@@ -66,9 +66,8 @@ StarZ Utilities is licensed under the MIT License. See the [LICENSE](#) file for
 
 ## Contact
 
-For support or inquiries, please contact us at:
-- Email: [support@starzutilities.com](mailto:support@starzutilities.com)
-- Website: [www.starzutilities.com](#)
+For support or inquiries, please contact us here:
+- Discord: [www.starzutilities.com](https://discord.gg/ScR9MGbRSY)
 
 ---
 
