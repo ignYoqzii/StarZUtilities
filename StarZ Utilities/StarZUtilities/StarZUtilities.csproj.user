@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Themes\DarkMode.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\LightMode.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

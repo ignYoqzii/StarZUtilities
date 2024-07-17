@@ -2,34 +2,42 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Windows.Controls;
+using System.DirectoryServices.AccountManagement;
+using System.Windows.Media.Imaging;
 using System.Windows;
 using static StarZUtilities.Classes.MusicPlayer;
 using static StarZUtilities.Windows.MainWindow;
+using System.Threading.Tasks;
+using Woof.SystemEx;
 
 namespace StarZUtilities.Classes
 {
     public partial class Loader
     {
+
         public static void CheckForThemes()
         {
             string Mode = ConfigManager.GetTheme();
             if (Mode == "Light")
             {
-                ThemesManager.LoadLightMode();
+                ThemesManager.LoadTheme("LightMode.xaml");
                 LightModeCheckBox!.IsChecked = true;
                 LightModeCheckBox!.IsEnabled = false;
             }
             else if (Mode == "Dark")
             {
-                ThemesManager.LoadDarkMode();
+                ThemesManager.LoadTheme("DarkMode.xaml");
                 DarkModeCheckBox!.IsChecked = true;
                 DarkModeCheckBox!.IsEnabled = false;
             }
         }
 
-        public static void CheckForColors()
+        public static void Load()
         {
-
+            VersionHelper.LoadCurrentVersions();
+            VersionHelper.CheckForUpdates();
+            Task.Run(() => LoadUserProfileInfo());
         }
 
         public static void LoadMusicFiles()
@@ -40,7 +48,7 @@ namespace StarZUtilities.Classes
 
             foreach (string filePath in musicFiles)
             {
-                MusicItem musicItem = new MusicItem(filePath);
+                MusicItem musicItem = new(filePath);
                 MusicItems.Add(musicItem);
             }
             CheckForItemsCount();
@@ -90,23 +98,44 @@ namespace StarZUtilities.Classes
             }
         }
 
-        public static void CreateDirectory()
+        public static async Task LoadUserProfileInfo()
         {
-            string documentspath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string starzutilitiespath = Path.Combine(documentspath, "StarZ Utilities");
-            string musicspath = Path.Combine(starzutilitiespath, "Musics");
-            string logspath = Path.Combine(starzutilitiespath, "Logs");
-            if (!Directory.Exists(starzutilitiespath))
+            await Task.Run(() =>
             {
-                Directory.CreateDirectory(starzutilitiespath);
+                // Get user display name
+                UserPrincipal userPrincipal = UserPrincipal.Current;
+                string displayName = userPrincipal?.DisplayName ?? Environment.UserName;
+
+                // Update TextBlock with user display name on the UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    usernameTextBlock!.Text = displayName;
+                });
+            });
+
+            await GetUserProfileImage();
+        }
+
+        private static async Task GetUserProfileImage()
+        {
+            try
+            {
+                var userPicturePath = await Task.Run(() => new BitmapImage(new Uri(SysInfo.GetUserPicturePath())));
+
+                userPicturePath.Freeze(); // Freezing for thread safety
+
+                profilePictureImage!.Dispatcher.Invoke(() =>
+                {
+                    profilePictureImage!.Source = userPicturePath;
+                });
             }
-            if (!Directory.Exists(musicspath))
+            catch (Exception ex)
             {
-                Directory.CreateDirectory(musicspath);
-            }
-            if (!Directory.Exists(logspath))
-            {
-                Directory.CreateDirectory(logspath);
+                // Handle exception (log or display error)
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    StarZMessageBox.ShowDialog($"Error loading user image: {ex.Message}", "Error", false);
+                });
             }
         }
     }

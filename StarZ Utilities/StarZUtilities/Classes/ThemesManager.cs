@@ -54,74 +54,23 @@ namespace StarZUtilities.Classes
                 SettingsTabImage!.Source = new BitmapImage(new Uri("/Resources/SettingsWhite.png", UriKind.Relative));
             }
         }
-
-        public static void LoadLightMode()
+        public static void LoadTheme(string theme)
         {
-            // Backgrounds
-            WindowBackground!.Background = (SolidColorBrush)Application.Current.Resources["LightMode1"];
-            foreach (var background in Backgrounds)
-            {
-                if (background != null)
-                {
-                    background.Background = (SolidColorBrush)Application.Current.Resources["LightMode2"];
-                }
-            }
+            // Construct the URI to the resource dictionary in the Themes folder
+            var uri = new Uri("/Themes/" + theme, UriKind.RelativeOrAbsolute);
 
-            // TextBoxes
-            URLTextBox!.Foreground = (SolidColorBrush)Application.Current.Resources["LightTextColor1"];
+            // Load the resource dictionary
+            ResourceDictionary resourceDict = new();
+            resourceDict.Source = uri;
 
-            // Close and Minimize buttons
-            CloseImage!.Source = new BitmapImage(new Uri("/Resources/CloseGray.png", UriKind.Relative));
-            MinimizeImage!.Source = new BitmapImage(new Uri("/Resources/MinimizeGray.png", UriKind.Relative));
-
-            // Logo
-            StarZLogoImage!.Source = new BitmapImage(new Uri("/Resources/StarZLogoDark.png", UriKind.Relative));
-
-            // TextBlocks
-            foreach (var textblock in TextBlocks)
-            {
-                if (textblock != null)
-                {
-                    textblock.Foreground = (SolidColorBrush)Application.Current.Resources["LightTextColor1"];
-                }
-            }
-        }
-
-        public static void LoadDarkMode()
-        {
-            // Backgrounds
-            WindowBackground!.Background = (SolidColorBrush)Application.Current.Resources["DarkMode1"];
-            foreach (var background in Backgrounds)
-            {
-                if (background != null)
-                {
-                    background.Background = (SolidColorBrush)Application.Current.Resources["DarkMode2"];
-                }
-            }
-
-            // TextBoxes
-            URLTextBox!.Foreground = (SolidColorBrush)Application.Current.Resources["DarkTextColor1"];
-
-            // Close and Minimize buttons
-            CloseImage!.Source = new BitmapImage(new Uri("/Resources/CloseWhite.png", UriKind.Relative));
-            MinimizeImage!.Source = new BitmapImage(new Uri("/Resources/MinimizeWhite.png", UriKind.Relative));
-
-            // Logo
-            StarZLogoImage!.Source = new BitmapImage(new Uri("/Resources/StarZLogoLight.png", UriKind.Relative));
-
-            // TextBlocks
-            foreach (var textblock in TextBlocks)
-            {
-                if (textblock != null)
-                {
-                    textblock.Foreground = (SolidColorBrush)Application.Current.Resources["DarkTextColor1"];
-                }
-            }
+            // Clear existing merged dictionaries and add the new one
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
 
         public static void DarkModeChecked()
         {
-            LoadDarkMode();
+            LoadTheme("DarkMode.xaml");
             LightModeCheckBox!.IsChecked = false;
             LightModeCheckBox!.IsEnabled = true;
             DarkModeCheckBox!.IsEnabled = false;
@@ -130,7 +79,7 @@ namespace StarZUtilities.Classes
 
         public static void LightModeChecked()
         {
-            LoadLightMode();
+            LoadTheme("LightMode.xaml");
             DarkModeCheckBox!.IsChecked = false;
             DarkModeCheckBox!.IsEnabled = true;
             LightModeCheckBox!.IsEnabled = false;

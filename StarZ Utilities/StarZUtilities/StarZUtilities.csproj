@@ -11,23 +11,20 @@
 	<Company>StarZ</Company>
 	<Product>StarZ Utilities</Product>
 	<AssemblyName>StarZ Utilities</AssemblyName>
-    <Description>A Minecraft Bedrock Edition External Client</Description>
+    <Description>An all-in-one Windows Utility tool.</Description>
 	<Copyright>StarZ Team ©</Copyright>
-	<FileVersion>1.0.0.0</FileVersion>
-	<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	<FileVersion>0.0.2.0</FileVersion>
+	<AssemblyVersion>0.0.2.0</AssemblyVersion>
 	<PlatformTarget>x64</PlatformTarget>
 	<ApplicationManifest>app.manifest</ApplicationManifest>
+	<StartupObject>StarZUtilities.App</StartupObject>
   </PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Resources/HacksGray.png" />
 		<None Remove="Resources/HomeGray.png" />
-		<None Remove="Resources/ModulesGray.png" />
 		<None Remove="Resources/MusicPlayerGray.png" />
 		<None Remove="Resources/SettingsGray.png" />
-		<None Remove="Resources/HacksWhite.png" />
 		<None Remove="Resources/HomeWhite.png" />
-		<None Remove="Resources/ModulesWhite.png" />
 		<None Remove="Resources/MusicPlayerWhite.png" />
 		<None Remove="Resources/SettingsWhite.png" />
 		<None Remove="Resources/StarZLogoDark.png" />
@@ -88,6 +85,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Discord.Net" Version="3.15.0" />
+		<PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
 		<PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre298" />
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="8.0.0-preview.4.23259.5" />
@@ -102,7 +100,12 @@
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
+		<PackageReference Include="Woof.System" Version="2.8.2" />
 		<PackageReference Include="YoutubeExplode" Version="6.3.16" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="System.DirectoryServices.AccountManagement" />
 	</ItemGroup>
 
 </Project>

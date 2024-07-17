@@ -19,7 +19,7 @@
 
         <StackPanel Orientation="Vertical">
 
-            <TextBlock x:Name="Title" Text="Title" FontSize="25" FontWeight="Bold" Foreground="AliceBlue" Margin="55,10,55,0">
+            <TextBlock x:Name="MessageBoxTitle" Text="Title" FontSize="25" FontWeight="Bold" Foreground="AliceBlue" Margin="55,10,55,0">
                 <TextBlock.Effect>
                     <DropShadowEffect/>
                 </TextBlock.Effect>

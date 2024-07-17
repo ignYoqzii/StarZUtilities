@@ -9,6 +9,8 @@ namespace StarZUtilities.Classes
     {
         // Default values for settings
         private const string THEME = "Light";
+        private const bool DEFAULT_DISCORD_RPC = true;
+        private const string DEFAULT_DISCORD_STATUS = "Using StarZ Utilities";
 
         private static readonly string configFilePath;
 
@@ -19,6 +21,8 @@ namespace StarZUtilities.Classes
         {
             // Set default values for settings
             settings.Add("Theme", THEME);
+            settings.Add("DiscordRPC", DEFAULT_DISCORD_RPC);
+            settings.Add("DiscordStatus", DEFAULT_DISCORD_STATUS);
 
             // Get the config file path in MyDocuments/StarZ Client
             string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -90,10 +94,46 @@ namespace StarZUtilities.Classes
             return (string)settings["Theme"];
         }
 
+        public static bool GetDiscordRPC()
+        {
+            return (bool)settings["DiscordRPC"];
+        }
+
+        public static string GetDiscordStatus()
+        {
+            return (string)settings["DiscordStatus"];
+        }
+
         public static void SetTheme(string newTheme)
         {
             // Update the value in the settings dictionary
             settings["Theme"] = newTheme;
+
+            // Write the updated settings to the config file
+            using StreamWriter writer = new(configFilePath);
+            foreach (KeyValuePair<string, object> kvp in settings)
+            {
+                writer.WriteLine($"{kvp.Key} = {kvp.Value}");
+            }
+        }
+
+        public static void SetDiscordRPC(bool value)
+        {
+            // Update the value in the settings dictionary
+            settings["DiscordRPC"] = value;
+
+            // Write the updated settings to the config file
+            using StreamWriter writer = new(configFilePath);
+            foreach (KeyValuePair<string, object> kvp in settings)
+            {
+                writer.WriteLine($"{kvp.Key} = {kvp.Value}");
+            }
+        }
+
+        public static void SetDiscordStatus(string newStatus)
+        {
+            // Update the value in the settings dictionary
+            settings["DiscordStatus"] = newStatus;
 
             // Write the updated settings to the config file
             using StreamWriter writer = new(configFilePath);

@@ -28,7 +28,7 @@ public static class Cleaner
             {
                 // Get user's temporary folder
                 string userTempFolderPath = Path.GetTempPath();
-                DirectoryInfo userTempDirectory = new DirectoryInfo(userTempFolderPath);
+                DirectoryInfo userTempDirectory = new(userTempFolderPath);
 
                 // Log the operation of deleting files in user's temporary folder
                 Log($"Deleting files in user's temporary folder: {userTempFolderPath}", logFilePath);

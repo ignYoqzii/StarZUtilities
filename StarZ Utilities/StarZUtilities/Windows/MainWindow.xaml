@@ -12,16 +12,79 @@
         AllowsTransparency="True"
         Title="StarZ Utilities" 
         Height="564" 
-        Width="904">
+        Width="904"
+        Loaded="Window_Loaded">
 
     <Grid>
 
-        <Border x:Name="MenuMainBackground" Background="{StaticResource LightMode1}" Opacity="1" CornerRadius="20" Width="904" Height="564"/>
-        <Border x:Name="SideBarBackground" Background="{StaticResource LightMode2}" Opacity="0.7" CornerRadius="15" Width="55" HorizontalAlignment="Left" Margin="25,138,0,25"/>
-        <Border x:Name="TopBarBackground" Background="{StaticResource LightMode2}" Opacity="0.7" BorderThickness="0" CornerRadius="15" Margin="25,25,630,448"/>
-        <Border x:Name="TopBarBackground2" Background="{StaticResource LightMode2}" Opacity="0.7" BorderThickness="0" CornerRadius="15" Margin="313,25,25,448"/>
-        <Border x:Name="MainBackground" Background="{StaticResource LightMode2}" Opacity="0.7" CornerRadius="15" Width="757" HorizontalAlignment="Left" Margin="122,138,0,25"/>
-        <Border x:Name="LogoBackground" Background="{StaticResource LightMode2}" CornerRadius="15" Width="80" Height="80" Margin="32,30,792,454"/>
+        <!-- Opening animation -->
+        <Grid 
+            x:Name="OpeningAnim" 
+            Panel.ZIndex="10" 
+            Visibility="Visible">
+
+            <Border 
+                Background="#111111" 
+                CornerRadius="20" 
+                BorderBrush="AliceBlue" 
+                BorderThickness="0.5" />
+
+            <Image 
+                x:Name="OpeningLogo" 
+                Source="/Resources/StarZLogoLight.png" 
+                Margin="378,204,378,234" 
+                RenderOptions.BitmapScalingMode="HighQuality" />
+
+            <Border 
+                Background="White" 
+                CornerRadius="2" 
+                BorderThickness="1" 
+                Margin="326,335,326,224">
+                <ProgressBar 
+                    Minimum="0" 
+                    Maximum="1" 
+                    Value="0" 
+                    Background="Transparent" 
+                    BorderThickness="0">
+                    <ProgressBar.Foreground>
+                        <LinearGradientBrush 
+                            EndPoint="0.5,1" 
+                            StartPoint="0.5,0">
+                            <GradientStop 
+                                Color="#FF00BCFB"/>
+                            <GradientStop 
+                                Color="#FF003E5D" 
+                                Offset="0.403"/>
+                            <GradientStop 
+                                Color="#FF00151F" 
+                                Offset="1"/>
+                        </LinearGradientBrush>
+                    </ProgressBar.Foreground>
+                    <ProgressBar.Triggers>
+                        <EventTrigger 
+                            RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation 
+                                        Storyboard.TargetProperty="Value" 
+                                        From="0" 
+                                        To="1" 
+                                        Duration="0:0:1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ProgressBar.Triggers>
+                </ProgressBar>
+            </Border>
+
+        </Grid>
+
+        <Border x:Name="MenuMainBackground" Style="{DynamicResource PrimaryBorder}" Opacity="1" CornerRadius="20" Width="904" Height="564"/>
+        <Border x:Name="SideBarBackground" Style="{DynamicResource SecondaryBorder}" Opacity="0.7" CornerRadius="15" Width="55" HorizontalAlignment="Left" Margin="25,138,0,25"/>
+        <Border x:Name="TopBarBackground" Style="{DynamicResource SecondaryBorder}" Opacity="0.7" BorderThickness="0" CornerRadius="15" Margin="25,25,630,448"/>
+        <Border x:Name="TopBarBackground2" Style="{DynamicResource SecondaryBorder}" Opacity="0.7" BorderThickness="0" CornerRadius="15" Margin="313,25,25,448"/>
+        <Border x:Name="MainBackground" Style="{DynamicResource SecondaryBorder}" Opacity="0.7" CornerRadius="15" Width="757" HorizontalAlignment="Left" Margin="122,138,0,25"/>
+        <Border x:Name="LogoBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="15" Width="80" Height="80" Margin="32,30,792,454"/>
 
         <Image 
             x:Name="CloseButton" 
@@ -161,7 +224,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="VersionText" Text="Utilities BETA" FontSize="20" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="122,71,661,472"/>
+        <TextBlock x:Name="VersionText" Text="Utilities BETA" FontSize="20" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="122,71,661,472"/>
 
         <TabControl x:Name="SideBarTabControl" BorderThickness="0" Background="Transparent" Height="656" Width="904" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="SideBarTabControl_SelectionChanged">
 
@@ -204,7 +267,7 @@
 
                 <Grid Margin="63,0,-2,0" Height="607">
 
-                    <TextBlock x:Name="HomeTextBlock" Text="Home" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="275,35,426,514"/>
+                    <TextBlock x:Name="HomeTextBlock" Text="Home" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="275,35,426,514"/>
 
                     <Grid 
                         Height="607"
@@ -223,33 +286,43 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
-                        <Border x:Name="HomeBackground1" Background="#f6f8fa" CornerRadius="20" Margin="80,160,317,265">
+                        <Border x:Name="HomeBackground1" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,160,317,265">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
 
-                        <Border x:Name="HomeBackground2" Background="#f6f8fa" CornerRadius="20" Margin="80,366,48,97">
+                        <Border x:Name="HomeBackground2" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,366,48,97">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
 
-                        <Border x:Name="HomeBackground3" Background="#f6f8fa" CornerRadius="20" Margin="548,160,48,265">
+                        <Border x:Name="HomeBackground3" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="548,160,48,265">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
 
-                        <TextBlock x:Name="WelcomeTextBlock" Text="Welcome to StarZ Utilities !" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="97,175,373,390"/>
-                        <TextBlock x:Name="DiscordServerTextBlock" Text="Join our Discord server !" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="208,388,287,177"/>
-                        <TextBlock x:Name="DiscordServerTextBlock2" Text="To get support or chat with other people from our community." FontSize="18" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="208,427,121,145"/>
-                        <TextBlock x:Name="ChangelogTextBlock" Text="Changelog" FontSize="25" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="566,178,141,393"/>
-                        <TextBlock x:Name="ChangelogTextBlock2" Text="This is in BETA testing!" FontSize="18" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="566,295,81,282"/>
+                        <TextBlock x:Name="WelcomeTextBlock" Text="Welcome to StarZ Utilities !" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="97,175,373,390"/>
+                        <TextBlock x:Name="DiscordServerTextBlock" Text="Join our Discord server !" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="208,388,287,177"/>
+                        <TextBlock x:Name="DiscordServerTextBlock2" Text="To get support or chat with other people from our community." FontSize="18" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="208,427,121,145"/>
+                        <TextBlock x:Name="VersionTextBlock" Text="Version" FontSize="25px" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="566,178,181,393"/>
+                        <TextBlock x:Name="Version1TextBlock" Text="N/A" TextAlignment="Left" FontSize="40px"   FontFamily="Outfit Thin" FontWeight="Bold" Style="{DynamicResource TextBlockStyle}" Margin="566,279,69,277"/>
                         <Image x:Name="DiscordIcon" Source="/Resources/Discord.png" Width="120" Height="120" RenderOptions.BitmapScalingMode="HighQuality" Margin="83,378,636,109"/>
                         <Button Content="Join >" Cursor="Hand" Foreground="White" FontWeight="Medium" FontFamily="Outfit Thin" Template="{StaticResource DefaultButtons}" Click="JoinDiscordServer_Click" Margin="208,462,561,0" Height="30" VerticalAlignment="Top" />
-                        <Image x:Name="ProfilePictureImage" Source="/Resources/Avatar.png" RenderOptions.BitmapScalingMode="HighQuality" Width="120" Height="120" Stretch="Uniform" Margin="88,210,631,277" />
-                        <TextBlock x:Name="DiscordUsernameTextBlock" Text="Your username" FontSize="18" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="208,222,317,355"/>
+                        <Border Width="100" Height="100" CornerRadius="20" Margin="97,222,642,285">
+                            <Border.Background>
+                                <VisualBrush Stretch="Fill">
+                                    <VisualBrush.Visual>
+                                        <Grid>
+                                            <Image x:Name="ProfilePictureImage" Source="/Resources/Avatar.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock x:Name="UsernameTextBlock" Text="Your username" FontSize="18" FontFamily="Outfit Thin" VerticalAlignment="Top" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="208,222,345,0"/>
 
                     </Grid>
 
@@ -265,7 +338,7 @@
 
                 <Grid Margin="63,0,-2,0" Height="607">
 
-                    <TextBlock x:Name="CleanTextBlock" Text="PC Cleaner" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="275,35,151,502"/>
+                    <TextBlock x:Name="CleanTextBlock" Text="PC Cleaner" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="275,35,151,502"/>
 
                     <Grid 
                         Height="607"
@@ -284,31 +357,31 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
-                        <Border x:Name="DiskCleanerBackground" Background="#f6f8fa" CornerRadius="20" Margin="80,158,419,279">
+                        <Border x:Name="DiskCleanerBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,158,419,279">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="RegistryCleanerBackground" Background="#f6f8fa" CornerRadius="20" Margin="451,158,48,279">
+                        <Border x:Name="RegistryCleanerBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="451,158,48,279">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="TracksEraserBackground" Background="#f6f8fa" CornerRadius="20" Margin="80,350,419,87">
+                        <Border x:Name="TracksEraserBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,350,419,87">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="SomethingBackground" Background="#f6f8fa" CornerRadius="20" Margin="451,350,48,87">
+                        <Border x:Name="SomethingBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="451,350,48,87">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
 
-                        <TextBlock x:Name="RegistryCleanerTextBlock" Text="Registry Cleaner" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,170,131,393"/>
-                        <TextBlock x:Name="DiskCleanerTextBlock" Text="Disk Cleaner" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,170,543,393"/>
-                        <TextBlock x:Name="TracksEraserTextBlock" Text="Tracks Eraser" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,365,543,198"/>
-                        <TextBlock x:Name="SomethingTextBlock" Text="Coming Soon"  TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,365,186,198"/>
+                        <TextBlock x:Name="RegistryCleanerTextBlock" Text="Registry Cleaner" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,170,131,393"/>
+                        <TextBlock x:Name="DiskCleanerTextBlock" Text="Disk Cleaner" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,170,543,393"/>
+                        <TextBlock x:Name="TracksEraserTextBlock" Text="Tracks Eraser" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,365,543,198"/>
+                        <TextBlock x:Name="SomethingTextBlock" Text="Coming Soon"  TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,365,186,198"/>
 
                         <Button Content="Temporary Files" Cursor="Hand" Foreground="White" FontWeight="Medium" FontFamily="Outfit Thin" Template="{StaticResource DefaultButtons}" Click="TemporaryFiles_Click" Margin="100,274,638,0" Height="30" VerticalAlignment="Top" >
                             <Button.Effect>
@@ -336,7 +409,7 @@
 
                 <Grid Margin="63,0,-2,0" Height="607">
 
-                    <TextBlock x:Name="AboutTextBlock" Text="About" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="275,35,419,504"/>
+                    <TextBlock x:Name="AboutTextBlock" Text="About" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="275,35,419,504"/>
 
                     <Grid 
                         Height="607"
@@ -355,42 +428,42 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
-                        <Border x:Name="AboutCPUBackground" Background="#f6f8fa" CornerRadius="20" Margin="80,158,419,279">
+                        <Border x:Name="AboutCPUBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,158,419,279">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="AboutGPUBackground" Background="#f6f8fa" CornerRadius="20" Margin="451,158,48,279">
+                        <Border x:Name="AboutGPUBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="451,158,48,279">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="AboutFanBackground" Background="#f6f8fa" CornerRadius="20" Margin="80,350,419,87">
+                        <Border x:Name="AboutFanBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,350,419,87">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="AboutOthersBackground" Background="#f6f8fa" CornerRadius="20" Margin="451,350,48,87">
+                        <Border x:Name="AboutOthersBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="451,350,48,87">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
 
-                        <TextBlock x:Name="CPUTempTextBlock" Text="Temperature: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,249,436,338"/>
-                        <TextBlock x:Name="GPUTempTextBlock" Text="Temperature: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,249,65,338"/>
-                        <TextBlock x:Name="CPUNameTextBlock" Text="CPU Name: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,214,436,373"/>
-                        <TextBlock x:Name="GPUNameTextBlock" Text="GPU Name: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,214,65,373"/>
-                        <TextBlock x:Name="CPULoadTextBlock" Text="Load: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,284,436,303"/>
-                        <TextBlock x:Name="GPULoadTextBlock" Text="Load: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,284,65,303"/>
-                        <TextBlock x:Name="GPUTextBlock" Text="GPU" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,170,305,393"/>
-                        <TextBlock x:Name="CPUTextBlock" Text="CPU" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,170,677,393"/>
-                        <TextBlock x:Name="FansTextBlock" Text="Fans Speed" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,365,577,198"/>
-                        <TextBlock x:Name="OthersTextBlock" Text="Other Informations"  TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,365,106,198"/>
-                        <TextBlock x:Name="CPUFanTextBlock" Text="CPU Fan: N/A RPM" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,425,436,162"/>
-                        <TextBlock x:Name="GPUFanTextBlock" Text="GPU Fan: N/A RPM" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="100,473,436,114"/>
-                        <TextBlock x:Name="MemoryTextBlock" Text="Memory: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,409,67,178"/>
-                        <TextBlock x:Name="IPAddressTextBlock" Text="IP Address: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,478,67,109"/>
-                        <TextBlock x:Name="MotherboardTextBlock" Text="Motherboard: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="469,444,67,143"/>
+                        <TextBlock x:Name="CPUTempTextBlock" Text="Temperature: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,249,436,338"/>
+                        <TextBlock x:Name="GPUTempTextBlock" Text="Temperature: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,249,65,338"/>
+                        <TextBlock x:Name="CPUNameTextBlock" Text="CPU Name: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,214,436,373"/>
+                        <TextBlock x:Name="GPUNameTextBlock" Text="GPU Name: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,214,65,373"/>
+                        <TextBlock x:Name="CPULoadTextBlock" Text="Load: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,284,436,303"/>
+                        <TextBlock x:Name="GPULoadTextBlock" Text="Load: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,284,65,303"/>
+                        <TextBlock x:Name="GPUTextBlock" Text="GPU" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,170,305,393"/>
+                        <TextBlock x:Name="CPUTextBlock" Text="CPU" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,170,677,393"/>
+                        <TextBlock x:Name="FansTextBlock" Text="Fans Speed" TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,365,577,198"/>
+                        <TextBlock x:Name="OthersTextBlock" Text="Other Informations"  TextAlignment="Left" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,365,106,198"/>
+                        <TextBlock x:Name="CPUFanTextBlock" Text="CPU Fan: N/A RPM" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,425,436,162"/>
+                        <TextBlock x:Name="GPUFanTextBlock" Text="GPU Fan: N/A RPM" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="100,473,436,114"/>
+                        <TextBlock x:Name="MemoryTextBlock" Text="Memory: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,409,67,178"/>
+                        <TextBlock x:Name="IPAddressTextBlock" Text="IP Address: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,478,67,109"/>
+                        <TextBlock x:Name="MotherboardTextBlock" Text="Motherboard: N/A" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,444,67,143"/>
 
                     </Grid>
 
@@ -406,7 +479,7 @@
 
                 <Grid Margin="63,0,-2,0" Height="607">
 
-                    <TextBlock x:Name="MusicPlayerTextBlock" Text="Music Player" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="275,35,278,514"/>
+                    <TextBlock x:Name="MusicPlayerTextBlock" Text="Music Player" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="275,35,278,514"/>
 
                     <Grid 
                         Height="607"
@@ -452,7 +525,7 @@
                             </ListBox.Template>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border x:Name="MusicItemsBackground" HorizontalAlignment="Center" BorderThickness="0" Background="{StaticResource LightMode2}" CornerRadius="10" Padding="5,5,5,5" Width="710" Margin="0,10,0,10">
+                                    <Border x:Name="MusicItemsBackground" HorizontalAlignment="Center" BorderThickness="0" Style="{DynamicResource SecondaryBorder}" CornerRadius="10" Padding="5,5,5,5" Width="710" Margin="0,10,0,10">
                                         <Border.Effect>
                                             <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                                         </Border.Effect>
@@ -463,8 +536,8 @@
                                             </Grid.ColumnDefinitions>
                                             <Image Source="{Binding Image}" RenderOptions.BitmapScalingMode="HighQuality" Width="100" Height="100" Stretch="Uniform" />
                                             <StackPanel Grid.Column="1" Margin="10">
-                                                <TextBlock Text="{Binding Title}" FontFamily="Outfit Thin" FontWeight="Bold" FontSize="16" />
-                                                <TextBlock Text="{Binding Artist}" FontFamily="Outfit Thin" FontSize="14" Margin="0,5,0,0" />
+                                                <TextBlock Text="{Binding Title}" Style="{DynamicResource TextBlockStyle}" FontFamily="Outfit Thin" FontWeight="Bold" FontSize="16" />
+                                                <TextBlock Text="{Binding Artist}" Style="{DynamicResource TextBlockStyle}" FontFamily="Outfit Thin" FontSize="14" Margin="0,5,0,0" />
                                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                                     <Image 
                                                     x:Name="PlayButton"
@@ -726,15 +799,15 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
 
-                        <TextBlock x:Name="MusicPlayerInfoTextBlock" Text="There's nothing here. Add musics to get started!" TextAlignment="Center" FontFamily="Outfit Thin" FontWeight="Medium" FontSize="15" Foreground="{StaticResource LightTextColor1}" Margin="270,336,241,249"/>
+                        <TextBlock x:Name="MusicPlayerInfoTextBlock" Text="There's nothing here. Add musics to get started!" TextAlignment="Center" FontFamily="Outfit Thin" FontWeight="Medium" FontSize="15" Style="{DynamicResource TextBlockStyle}" Margin="270,336,241,249"/>
 
-                        <TextBlock x:Name="URLTextBlock" Text="YouTube URL :" TextAlignment="Center" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="71,158,659,429"/>
+                        <TextBlock x:Name="URLTextBlock" Text="YouTube URL :" TextAlignment="Center" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="71,158,659,429"/>
 
-                        <Border x:Name="URLBackground" Background="{StaticResource LightMode2}" Height="40" CornerRadius="15" Margin="180,148,138,419">
+                        <Border x:Name="URLBackground" Style="{DynamicResource SecondaryBorder}" Height="40" CornerRadius="15" Margin="180,148,138,419">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
-                            <TextBox x:Name="urlTextBox" KeyDown="urlTextBox_KeyDown" Background="Transparent" BorderThickness="0" Padding="10,6" Foreground="{StaticResource LightTextColor1}" FontFamily="Outfit Thin" FontSize="20" Margin="0,0,10,0"/>
+                            <TextBox x:Name="urlTextBox" KeyDown="urlTextBox_KeyDown" Background="Transparent" BorderThickness="0" Padding="10,6" Style="{DynamicResource TextBoxStyle}" FontFamily="Outfit Thin" FontSize="20" Margin="0,0,10,0"/>
                         </Border>
 
                     </Grid>
@@ -751,7 +824,7 @@
 
                 <Grid Margin="63,0,-2,0" Height="607">
 
-                    <TextBlock x:Name="SettingsTextBlock" Text="Settings" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="275,35,371,507"/>
+                    <TextBlock x:Name="SettingsTextBlock" Text="Settings" FontSize="50" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="275,35,371,507"/>
 
                     <Grid 
                         Height="607"
@@ -770,18 +843,33 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
-                        <Border x:Name="ThemesBackground" Background="#f6f8fa" CornerRadius="20" Margin="80,160,419,257">
+                        <Border x:Name="ThemesBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="80,160,419,257">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="ColorsBackground" Background="#f6f8fa" CornerRadius="20" Margin="449,160,50,257">
+                        <Border x:Name="ColorsBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="20" Margin="449,160,50,257">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="20" Opacity="0.3"/>
                             </Border.Effect>
                         </Border>
-                        <TextBlock x:Name="ThemesTextBlock" Text="Themes" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="0,174,629,394" HorizontalAlignment="Right" Width="112"/>
-                        <TextBlock x:Name="GeneralTextBlock" Text="General" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Foreground="{StaticResource LightTextColor1}" Margin="467,174,180,394"/>
+                        <TextBlock x:Name="ThemesTextBlock" Text="Themes" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="0,174,629,394" HorizontalAlignment="Right" Width="112"/>
+                        <TextBlock x:Name="DiscordOptionsTextBlock" Text="Discord" FontSize="30" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="467,174,250,394"/>
+                        <TextBlock x:Name="DiscordRPCTextBlock" Text="Discord Rich Presence" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="469,240,220,347"/>
+
+                        <ToggleButton x:Name="DRP" Style="{StaticResource DefaultToggleButtonStyle}" IsChecked="True" Margin="727,240,70,347" Click="DRP_Click"/>
+
+                        <Grid x:Name="DiscordOptions" Margin="449,271,50,257">
+
+                            <TextBlock x:Name="StatusTextBlock" Text="Discord Status" TextAlignment="Left" FontSize="15" FontFamily="Outfit Thin" FontWeight="Medium" Style="{DynamicResource TextBlockStyle}" Margin="21,30,216,31"/>
+                            <Border x:Name="StatusBackground" Style="{DynamicResource SecondaryBorder}" CornerRadius="7" Margin="129,26,21,26">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="20" Opacity="0.3" RenderingBias="Performance" ShadowDepth="5"/>
+                                </Border.Effect>
+                                <TextBox x:Name="StatusTextBox" Text="Using StarZ Utilities" FontWeight="DemiBold" TextChanged="StatusTextBox_TextChanged" TextAlignment="Left" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" Style="{DynamicResource TextBoxStyle}" FontFamily="Outfit Thin" FontSize="13px" Width="182" Height="26"/>
+                            </Border>
+
+                        </Grid>
 
                         <CheckBox x:Name="CheckBoxLightMode" Cursor="Hand" Margin="154,247,615,0" VerticalAlignment="Top" Width="70" Height="70" IsEnabled="True" Checked="CheckBoxLightMode_Checked">
                             <CheckBox.Resources>

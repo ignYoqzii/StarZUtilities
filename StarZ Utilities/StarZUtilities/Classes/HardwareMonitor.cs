@@ -15,6 +15,7 @@ namespace StarZUtilities.Classes
             {
                 IsCpuEnabled = true,
                 IsMemoryEnabled = true,
+                IsMotherboardEnabled = true,
                 IsGpuEnabled = true
             };
             computer.Open();
@@ -121,7 +122,7 @@ namespace StarZUtilities.Classes
                         double load = Math.Round(sensor.Value.GetValueOrDefault(), 0);
                         gpuLoadTextBlock!.Dispatcher.Invoke(() =>
                         {
-                            gpuLoadTextBlock!.Text = $"GPU Load: {load}%";
+                            gpuLoadTextBlock!.Text = $"Load: {load}%";
                         });
                         break;
                     case SensorType.Fan:

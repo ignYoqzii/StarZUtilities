@@ -16,7 +16,7 @@ namespace StarZUtilities.Windows
             BackgroundForWindowsOnTop!.Visibility = Visibility.Visible;
             StarZMessageBox messageBox = new();
             messageBox.Message.Text = message;
-            messageBox.Title.Text = title;
+            messageBox.MessageBoxTitle.Text = title;
 
             if (!showCancelButton)
             {

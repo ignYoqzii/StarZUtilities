@@ -1,10 +1,15 @@
-﻿<Application x:Class="StarZClient.App"
+﻿<Application x:Class="StarZUtilities.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
 
         <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/LightMode.xaml" />
+                <ResourceDictionary Source="/Themes/DarkMode.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="LightMode1" Color="#ccd0d1" />
             <SolidColorBrush x:Key="LightMode2" Color="#f6f8fa" />
@@ -61,6 +66,50 @@
                     </Border.RenderTransform>
                 </Border>
             </ControlTemplate>
+
+            <Style x:Key="DefaultToggleButtonStyle" TargetType="ToggleButton">
+                <Setter Property="Foreground" Value="#FFF" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Grid Width="40" Height="20">
+                                <Border x:Name="border" BorderBrush="#6D6D6D" BorderThickness="2" CornerRadius="10" Background="#9E9E9E" Cursor="Hand">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*" />
+                                            <ColumnDefinition Width="0.5*" />
+                                        </Grid.ColumnDefinitions>
+                                    </Grid>
+                                </Border>
+                                <Ellipse x:Name="SwitchCircle" Fill="#FFF" StrokeThickness="2" Margin="1" Cursor="Hand">
+                                    <Ellipse.Width>
+                                        <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    </Ellipse.Width>
+                                </Ellipse>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="SwitchCircle" Property="Margin" Value="20,1,1,1" />
+                                    <Setter TargetName="border" Property="Background" >
+                                        <Setter.Value>
+                                            <LinearGradientBrush EndPoint="0,2" StartPoint="1,1">
+                                                <GradientStop Color="#FF0044EA"/>
+                                                <GradientStop Color="#FF00C7ED" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter TargetName="SwitchCircle" Property="Margin" Value="1,1,20,1" />
+                                    <Setter TargetName="border" Property="Background" Value="#9E9E9E" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

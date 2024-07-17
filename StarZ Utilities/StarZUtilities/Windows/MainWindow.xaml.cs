@@ -1,11 +1,14 @@
 ﻿using StarZUtilities.Classes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace StarZUtilities.Windows
 {
@@ -27,14 +30,13 @@ namespace StarZUtilities.Windows
         public static TabItem? MusicPlayertabItem;
         public static TabItem? SettingstabItem;
 
-        public static Border? WindowBackground;
         public static Border? BackgroundForWindowsOnTop;
 
         public static CheckBox? DarkModeCheckBox;
         public static CheckBox? LightModeCheckBox;
 
         public static TextBlock? MusicPlayerInformationTextBlock;
-        public static TextBlock? discordUsernameTextBlock;
+        public static TextBlock? usernameTextBlock;
         public static TextBlock? cpuTempTextBlock;
         public static TextBlock? gpuTempTextBlock;
         public static TextBlock? cpuNameTextBlock;
@@ -46,21 +48,18 @@ namespace StarZUtilities.Windows
         public static TextBlock? memoryTextBlock;
         public static TextBlock? motherboardTextBlock;
         public static TextBlock? ipaddressTextBlock;
+        public static TextBlock? version1TextBlock;
 
         public static TextBox? URLTextBox;
-        public static TextBox? VideoURLTextBox;
+        public static TextBox? statusTextBox;
 
         public static Image? CloseImage;
         public static Image? MinimizeImage;
-
-        public static List<Border?> Backgrounds = new();
-        public static List<TextBlock?> TextBlocks = new();
 
         private HardwareMonitor hardwareMonitor;
 
         public MainWindow()
         {
-            Loader.CreateDirectory();
             InitializeComponent();
 
             hardwareMonitor = new HardwareMonitor();
@@ -86,7 +85,6 @@ namespace StarZUtilities.Windows
             SettingstabItem = SettingsTabItem;
 
             // Window background
-            WindowBackground = MenuMainBackground;
             BackgroundForWindowsOnTop = DarkBackgroundWindows;
 
             // Themes checkboxes
@@ -95,7 +93,7 @@ namespace StarZUtilities.Windows
 
             // Individual TextBlocks
             MusicPlayerInformationTextBlock = MusicPlayerInfoTextBlock;
-            discordUsernameTextBlock = DiscordUsernameTextBlock;
+            usernameTextBlock = UsernameTextBlock;
             cpuTempTextBlock = CPUTempTextBlock;
             gpuTempTextBlock = GPUTempTextBlock;
             gpuNameTextBlock = GPUNameTextBlock;
@@ -107,6 +105,7 @@ namespace StarZUtilities.Windows
             memoryTextBlock = MemoryTextBlock;
             motherboardTextBlock = MotherboardTextBlock;
             ipaddressTextBlock = IPAddressTextBlock;
+            version1TextBlock = Version1TextBlock;
 
             // Buttons
             CloseImage = CloseButton;
@@ -114,68 +113,44 @@ namespace StarZUtilities.Windows
 
             // TextBoxes
             URLTextBox = urlTextBox;
-
-            // Add items to the lists
-            Backgrounds.Add(SideBarBackground);
-            Backgrounds.Add(TopBarBackground);
-            Backgrounds.Add(TopBarBackground2);
-            Backgrounds.Add(MainBackground);
-            Backgrounds.Add(LogoBackground);
-            Backgrounds.Add(ThemesBackground);
-            Backgrounds.Add(ColorsBackground);
-            Backgrounds.Add(HomeBackground1);
-            Backgrounds.Add(HomeBackground2);
-            Backgrounds.Add(HomeBackground3);
-            Backgrounds.Add(URLBackground);
-            Backgrounds.Add(AboutCPUBackground);
-            Backgrounds.Add(AboutGPUBackground);
-            Backgrounds.Add(AboutFanBackground);
-            Backgrounds.Add(AboutOthersBackground);
-            Backgrounds.Add(DiskCleanerBackground);
-            Backgrounds.Add(RegistryCleanerBackground);
-            Backgrounds.Add(TracksEraserBackground);
-            Backgrounds.Add(SomethingBackground);
-
-            TextBlocks.Add(VersionText);
-            TextBlocks.Add(HomeTextBlock);
-            TextBlocks.Add(CleanTextBlock);
-            TextBlocks.Add(AboutTextBlock);
-            TextBlocks.Add(MusicPlayerTextBlock);
-            TextBlocks.Add(SettingsTextBlock);
-            TextBlocks.Add(ThemesTextBlock);
-            TextBlocks.Add(GeneralTextBlock);
-            TextBlocks.Add(MemoryTextBlock);
-            TextBlocks.Add(MotherboardTextBlock);
-            TextBlocks.Add(IPAddressTextBlock);
-            TextBlocks.Add(MusicPlayerInfoTextBlock);
-            TextBlocks.Add(URLTextBlock);
-            TextBlocks.Add(CPUTextBlock);
-            TextBlocks.Add(GPUTextBlock);
-            TextBlocks.Add(CPUTempTextBlock);
-            TextBlocks.Add(GPUTempTextBlock);
-            TextBlocks.Add(CPUNameTextBlock);
-            TextBlocks.Add(CPULoadTextBlock);
-            TextBlocks.Add(GPUNameTextBlock);
-            TextBlocks.Add(GPULoadTextBlock);
-            TextBlocks.Add(FansTextBlock);
-            TextBlocks.Add(OthersTextBlock);
-            TextBlocks.Add(CPUFanTextBlock);
-            TextBlocks.Add(GPUFanTextBlock);
-            TextBlocks.Add(WelcomeTextBlock);
-            TextBlocks.Add(DiscordServerTextBlock);
-            TextBlocks.Add(DiscordServerTextBlock2);
-            TextBlocks.Add(ChangelogTextBlock);
-            TextBlocks.Add(ChangelogTextBlock2);
-            TextBlocks.Add(DiscordUsernameTextBlock);
-            TextBlocks.Add(DiskCleanerTextBlock);
-            TextBlocks.Add(RegistryCleanerTextBlock);
-            TextBlocks.Add(TracksEraserTextBlock);
-            TextBlocks.Add(SomethingTextBlock);
+            statusTextBox = StatusTextBox;
 
             // Loading part
+            LoadSettingsFromFile();
             Loader.CheckForThemes();
             Loader.LoadMusicFiles();
             Loader.GetIpAddress();
+            Loader.Load();
+        }
+
+        private bool isFirstTimeOpened = true;
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (isFirstTimeOpened)
+            {
+                DoubleAnimation animation = new(0, 1, new Duration(TimeSpan.FromSeconds(1)))
+                {
+                    EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseOut }
+                };
+                this.BeginAnimation(Window.OpacityProperty, animation);
+
+                // Wait for 3 seconds before setting the visibility of the grid to Hidden
+                await Task.Delay(1000);
+
+                DoubleAnimation opacityAnimation = new()
+                {
+                    From = 1,
+                    To = 0,
+                    Duration = new Duration(TimeSpan.FromSeconds(0.5)),
+                };
+                OpeningAnim.BeginAnimation(Image.OpacityProperty, opacityAnimation);
+
+                await Task.Delay(500);
+                // Handle the Completed event to hide the grid when the opacity animation is finished
+                OpeningAnim.Visibility = Visibility.Collapsed;
+
+                isFirstTimeOpened = false;
+            }
         }
 
         private void SideBarTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -265,6 +240,68 @@ namespace StarZUtilities.Windows
         private void CleanupUtility_Click(object sender, RoutedEventArgs e)
         {
             Cleaner.CleanupUtility();
+        }
+
+        private void DRP_Click(object sender, RoutedEventArgs e)
+        {
+            if (DRP.IsChecked == true)
+            {
+                DiscordOptions.Visibility = Visibility.Visible;
+                ConfigManager.SetDiscordRPC(true); // set DiscordRPC to true
+                if (!DiscordRichPresenceManager.DiscordClient.IsInitialized)
+                {
+                    DiscordRichPresenceManager.DiscordClient.Initialize();
+                }
+                DiscordRichPresenceManager.SetPresence();
+            }
+            else
+            {
+                DiscordOptions.Visibility = Visibility.Collapsed;
+                ConfigManager.SetDiscordRPC(false); // set DiscordRPC to false
+                DiscordRichPresenceManager.DiscordClient.ClearPresence();
+            }
+        }
+
+        private void StatusTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                // Get the text value from the TextBox
+                string text = StatusTextBox!.Text;
+
+                // Validate the entered text
+                if (!string.IsNullOrEmpty(text))
+                {
+                    bool DiscordRPCisChecked = ConfigManager.GetDiscordRPC();
+                    if (DiscordRPCisChecked == true)
+                    {
+                        DiscordRichPresenceManager.UpdatePresence(text);
+                        ConfigManager.SetDiscordStatus(text);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                StarZMessageBox.ShowDialog($"Error updating Discord status: {ex.Message}", "Error", false);
+            }
+        }
+
+        // Load the default values of the checkboxes, drop downs... on window's loading
+        private void LoadSettingsFromFile()
+        {
+            bool DiscordRPCisChecked = ConfigManager.GetDiscordRPC();
+            if (DiscordRPCisChecked == true)
+            {
+                DRP.IsChecked = true;
+                DiscordOptions.Visibility = Visibility.Visible;
+                string DiscordStatusText = ConfigManager.GetDiscordStatus();
+                StatusTextBox!.Text = DiscordStatusText;
+            }
+            else
+            {
+                DRP.IsChecked = false;
+                DiscordOptions.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
