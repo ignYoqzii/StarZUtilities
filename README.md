@@ -57,7 +57,7 @@ Please note that I, ignYoqzii, am not very active and don't code alot. If you wa
 
 ## License
 
-StarZ Utilities is licensed under the MIT License. See the [LICENSE](#) file for more information.
+StarZ Utilities is licensed under the MIT License. See the [LICENSE](https://github.com/ignYoqzii/StarZUtilities/blob/main/LICENSE) file for more information.
 
 ## Contact
 
