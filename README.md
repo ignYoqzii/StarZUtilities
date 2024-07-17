@@ -1,7 +1,3 @@
-Here is a nicely formatted README file for your program, **StarZ Utilities**:
-
----
-
 # StarZ Utilities
 
 StarZ Utilities is an all-in-one application designed to enhance your PC experience. With StarZ Utilities, you can monitor your PC's performance, download and listen to music from YouTube, and keep your PC clean and optimized.
