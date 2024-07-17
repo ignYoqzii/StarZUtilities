@@ -12,7 +12,7 @@ StarZ Utilities is an all-in-one application designed to enhance your PC experie
 
 ### Music Downloader
 - **Download your favorite music from YouTube.**
-  - Easily download audio from YouTube videos and save them directly to your PC.
+  - Utilizes the `YoutubeExplode` NuGet package to query metadata of YouTube videos, as well as to resolve and download video streams.
 
 ### Music Player
 - **Listen to music directly within the application.**
