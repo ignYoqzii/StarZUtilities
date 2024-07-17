@@ -22,7 +22,7 @@ StarZ Utilities is an all-in-one application designed to enhance your PC experie
 
 ## Installation
 
-1. **Download the latest release** from the [Releases](https://github.com/yourusername/StarZUtilities/releases) page.
+1. **Download the latest release** from the [Releases](https://github.com/ignYoqzii/StarZUtilities/releases) page.
 2. **Extract the downloaded ZIP file** to your desired location.
 3. **Run `StarZUtilities.exe`** to launch the application.
 
