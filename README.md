@@ -2,7 +2,7 @@
 
 StarZ Utilities is an all-in-one application designed to enhance your PC experience. With StarZ Utilities, you can monitor your PC's performance, download and listen to music from YouTube, and keep your PC clean and optimized. 
 
-*It is entirely made by a beginner in coding, so it mostly will have many problems and bugs. This is expected.*
+*It is entirely made by a beginner in coding, so it mostly will have many problems and bugs. This is expected. For now, use at your own risks.*
 
 ## Features
 
