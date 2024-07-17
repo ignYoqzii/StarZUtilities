@@ -51,7 +51,7 @@ StarZ Utilities is an all-in-one application designed to enhance your PC experie
 
 ## Contributing
 
-We welcome contributions to improve StarZ Utilities. If you have suggestions, bug reports, or want to contribute code, please [open an issue]() or fork our GitHub repository to make changes. 
+We welcome contributions to improve StarZ Utilities. If you have suggestions, bug reports, or want to contribute code, please [open an issue](https://github.com/ignYoqzii/StarZUtilities/issues) or fork our GitHub repository to make changes. 
 
 Please note that I, ignYoqzii, am not very active and don't code alot. If you want to make modifications, do not hesitate to fork and modify it yourself!
 
