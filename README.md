@@ -18,7 +18,7 @@ StarZ Utilities is an all-in-one application designed to enhance your PC experie
 
 ### PC Cleaning and Optimization
 - **Clean and optimize your PC for better performance.**
-  - Remove unnecessary files, manage startup programs, and perform other optimizations to keep your PC running smoothly.
+  - Remove unnecessary files, clean your registry, and perform other optimizations to keep your PC running smoothly.
 
 ## Installation
 
